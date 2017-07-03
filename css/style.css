@@ -1,3 +1,61 @@
+*{
+  box-sizing: border-box;
+
+}
+
 body {
-  background: red;
+  margin: 0;
+}
+
+.box {
+  width: 100px;
+  height: 300px;
+  background-color: blue;
+  position: fixed;
+  left: 40px;
+  bottom: 100px;
+  z-index: 1;
+}
+
+.object {
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  position: absolute;
+  left: 500px;
+  bottom: 100px;
+  z-index: 1;
+}
+
+.rightFloat {
+  background-color:pink;
+  float: right;
+  width: 33.3%;
+  height: 8000px;
+}
+
+.leftFloat {
+  background-color:yellow;
+  float: left;
+  width: 33.4%;
+  height: 8000px;
+}
+
+.noFloat {
+  background-color: cyan;
+  display: inline-block;
+  width: 33.3%;
+  height: 8000px;
+}
+
+.ground {
+  background-color: green;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  bottom: 0;
+}
+
+button {
+  background: transparent;
 }
