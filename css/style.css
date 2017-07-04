@@ -10,7 +10,7 @@ body {
 .box {
   width: 100px;
   height: 300px;
-  background-color: blue;
+  background-color: red;
   position: fixed;
   left: 40px;
   bottom: 100px;
@@ -20,11 +20,12 @@ body {
 .object {
   width: 100px;
   height: 100px;
-  background-color: black;
+  background-color: blue;
   position: absolute;
-  left: 500px;
+  left: 5000px;
+  right: 5000px;
   bottom: 100px;
-  z-index: 1;
+  z-index: 10;
 }
 
 .rightFloat {
@@ -39,6 +40,8 @@ body {
   float: left;
   width: 33.4%;
   height: 8000px;
+  font-size: 10em;
+
 }
 
 .noFloat {
