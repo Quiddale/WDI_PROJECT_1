@@ -1,5 +1,5 @@
-*{
-  box-sizing: border-box;
+/**{
+  box-sizing: border-box;*/
 
 }
 
@@ -20,7 +20,6 @@ body {
 .object {
   width: 100px;
   height: 100px;
-  background-color: blue;
   position: absolute;
   left: 5000px;
   right: 5000px;
@@ -41,7 +40,6 @@ body {
   width: 33.4%;
   height: 8000px;
   font-size: 10em;
-
 }
 
 .noFloat {

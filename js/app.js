@@ -7,87 +7,99 @@ function init() {
   // Get Relative Position of Const
   let locationBomb = $bomb[0].getBoundingClientRect();
   let locationChar = $char[0].getBoundingClientRect();
-  // console.log(`bomb location:`,locationBomb,`char location:`, locationChar);
 
+  //Start Game
   $('.columns').height($(window).height());
   $(document).ready(function(){
-    //Start Game
     $('.leftFloat.columns').one('click', function() {
+
       // Create New Box
       const newBox = $('<div>', {'class': 'object 1'});
       $('body').append(newBox);
       $('.object').clone().append('newBox');
-      //Step Function
-      $bomb.animate({left: '-100%'},
-        {
-          duration: (Math.floor(Math.random() * (10000-7000+1)) + 7000),
-          step: function(now, fx) {
-            // $bomb.animate({duration: 100, step: function(now,fx) {
-            // $char.animate({duration: 100, step: function(now,fx) {
-            locationBomb = $bomb[0].getBoundingClientRect();
-            locationChar = $char[0].getBoundingClientRect();
-            // console.log(locationChar);
-            // console.log(locationBomb);
-            if (locationBomb.left === locationChar.left) {
+      $bomb.animate({left: '-10%'},
+      {duration: (Math.floor(Math.random() * (9000-7000+1)) + 7000),
 
-              // Collision if Statemnt
-              if ($char.x < $bomb.x + $bomb.w &&
-                     $char.x + $char.w > $bomb.x &&
-                     $char.y < $bomb.y + $bomb.h &&
-                     $char.h + $char.y > $bomb.y) {
-                console.log('hit!');
-                // Collision Detected!
-                $bomb.css('color','green', fx);
-              } else {
-                // No Collision
-                $char.css('color','blue', fx);
-              }
-            }
+        //Step Animate left
+        step: function() {
+          locationBomb = $bomb[0].getBoundingClientRect();
+          locationChar = $char[0].getBoundingClientRect();
+
+          // Collision if Statemnt
+          if (!(((locationChar.top + locationChar.height) < (locationBomb.top)) ||
+          (locationChar.top > (locationBomb.top + locationBomb.height)) ||
+          ((locationChar.left + locationChar.width) < locationBomb.left) ||
+          (locationChar.left > (locationBomb.left + locationBomb.width)))) {
+            console.log('hit!');
+            //Explosion
+            $(this).css('background-color', 'green');
+            $(this).toggle('explode').stop().remove();
+            // Collision Detected!
+          } else {
+            // No Collision
+            $(this).css('background-color', 'pink');
           }
-        }); //end of $bomb.animate Scope
+        }
+        // }
+      }); //end of $bomb.animate Scope
     }); // end of column.one('click')
   });
 
   $(document).keydown(function(e){
-
-  // Up arrow
-  if (e.keyCode === 38){
-    $('.box').animate({
-      bottom: '+=800px',
-      height: '20px',
-      width: '50px'
-    }, 400, 'easeOutQuad');
-    $('.box').animate({
-      bottom: '-=800px',
-      height: '300px',
-      width: '100px'
-    }, 400, 'easeInQuad');
-
+    // Up arrow
+    if (!this.pressed) {
+        this.pressed = true;
+        if (e.keyCode === 38 || e.KeyCode === 39 || e.KeyCode === 37 || e.Keycode === 40) {//pressed key[up]...
+          this.jumpKey = true;
+          $player.stop();
+          $player.clearQueue();
+          this.jump($player);
+    } else if (e.keyCode === 38){
+      $('.box').animate({
+        bottom: '+=800px',
+        height: '20px',
+        width: '50px'
+      }, 400, 'easeOutQuad');
+      $('.box').animate({
+        bottom: '-=800px',
+        height: '300px',
+        width: '100px'
+      }, 400, 'easeInQuad');
     //right arrow
-  } else if (e.keyCode === 39) {
-    $('.box').animate({
-      left: '+=308px',
-      height: '20px',
-      width: '200'
-    }, 400, 'easeOutQuad');
-    $('.box').animate({
-      left: '-=308px',
-      height: '20px',
-      width: '100px'
-    }, 400, 'easeInQuad');
-
+    } else if (e.keyCode === 39) {
+      $('.box').animate({
+        left: '+=308px',
+        height: '20px',
+        width: '200'
+      }, 400, 'easeOutQuad');
+      $('.box').animate({
+        left: '-=308px',
+        height: '20px',
+        width: '100px'
+      }, 400, 'easeInQuad');
     // left arrow
-  } else if (e.keyCode === 37) {
-    $('.box').animate({
-      left: '+=308px',
-      height: '300px',
-      width: '500px'
-    }, 400, 'easeOutQuad');
-    $('.box').animate({
-      left: '-=308px',
-      height: '200px',
-      width: '80px'
-    }, 400, 'easeInQuad');
-  }
-  });
+    } else if (e.keyCode === 37) {
+      $('.box').animate({
+        left: '+=308px',
+        height: '300px',
+        width: '500px'
+      }, 400, 'easeOutQuad');
+      $('.box').animate({
+        left: '-=308px',
+        height: '200px',
+        width: '80px'
+      }, 400, 'easeInQuad');
+    } else if (e.keyCode === 40) {
+      $('.box').animate({
+        left: '+=308px',
+        height: '50px',
+        width: '500px'
+      }, 400, 'easeOutQuad');
+      $('.box').animate({
+        left: '-=308px',
+        height: '300px',
+        width: '40px'
+      }, 400, 'easeInQuad');
+    }
+  })
 }
