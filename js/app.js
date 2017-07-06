@@ -2,104 +2,106 @@ $(init);
 function init() {
 
   const $char = $('.box');
-  const $bomb = $('.object');
+  // const $bomb = $('.object');
+
 
   // Get Relative Position of Const
-  let locationBomb = $bomb[0].getBoundingClientRect();
+  // let locationBomb = $bomb[0].getBoundingClientRect();
   let locationChar = $char[0].getBoundingClientRect();
 
   //Start Game
   $('.columns').height($(window).height());
-  $(document).ready(function(){
-    $('.leftFloat.columns').one('click', function() {
 
-      // Create New Box
-      const newBox = $('<div>', {'class': 'object 1'});
-      $('body').append(newBox);
-      $('.object').clone().append('newBox');
-      $bomb.animate({left: '-10%'},
+  let interval;
+
+  $('.leftFloat.columns').on('click', function() {
+
+    // Create New Box
+    // Call Function
+    // Set Interval
+    interval = setInterval(launchBox, 1000);
+
+    // function yell() {
+    //   console.log("hello");
+    // }
+
+
+  }); // end of column.one('click')
+
+  $('.rightFloat.columns').on('click', function() {
+    clearInterval(interval);
+  });
+
+  let newBox;
+  let newstar;
+  let locationNewBox;
+
+  function launchBox() {
+    newBox = $('<div>', {'class': 'object'});
+    $('body').append(newBox);
+    newBox.animate({left: '-10%'},
       {duration: (Math.floor(Math.random() * (9000-7000+1)) + 7000),
 
-        //Step Animate left
+      //Step Function
         step: function() {
-          locationBomb = $bomb[0].getBoundingClientRect();
+          locationNewBox = this.getBoundingClientRect();
           locationChar = $char[0].getBoundingClientRect();
-
+          // console.log(this);
           // Collision if Statemnt
-          if (!(((locationChar.top + locationChar.height) < (locationBomb.top)) ||
-          (locationChar.top > (locationBomb.top + locationBomb.height)) ||
-          ((locationChar.left + locationChar.width) < locationBomb.left) ||
-          (locationChar.left > (locationBomb.left + locationBomb.width)))) {
-            console.log('hit!');
-            //Explosion
+          if (!(((locationChar.top + locationChar.height) < (locationNewBox.top)) ||
+          (locationChar.top > (locationNewBox.top + locationNewBox.height)) ||
+          ((locationChar.left + locationChar.width) < locationNewBox.left) ||
+          (locationChar.left > (locationNewBox.left + locationNewBox.width)))) {
+
+            // Collision Detected!
+            console.log(this);
             $(this).css('background-color', 'green');
             $(this).toggle('explode').stop().remove();
-            // Collision Detected!
+            console.log('hit!');
           } else {
             // No Collision
             $(this).css('background-color', 'pink');
           }
         }
-        // }
-      }); //end of $bomb.animate Scope
-    }); // end of column.one('click')
-  });
+      });
+    console.log('box Launched!');
+  } // end of launchBox() scope
 
   $(document).keydown(function(e){
     // Up arrow
     if (!this.pressed) {
-        this.pressed = true;
-        if (e.keyCode === 38 || e.KeyCode === 39 || e.KeyCode === 37 || e.Keycode === 40) {//pressed key[up]...
-          this.jumpKey = true;
-          $player.stop();
-          $player.clearQueue();
-          this.jump($player);
-    } else if (e.keyCode === 38){
+      this.pressed = true;
+      $char.stop();
+    } else if (e.keyCode === 38){//Up Arrow
+      $char.clearQueue();
       $('.box').animate({
-        bottom: '+=800px',
-        height: '20px',
+        bottom: '1100px',
+        height: '300px',
         width: '50px'
-      }, 400, 'easeOutQuad');
+      }, 400, 'swing');
+    } else if (e.keyCode === 39){//Right Arrow
+      $char.clearQueue();
       $('.box').animate({
-        bottom: '-=800px',
+        left: '2400px',
         height: '300px',
-        width: '100px'
-      }, 400, 'easeInQuad');
-    //right arrow
-    } else if (e.keyCode === 39) {
+        width: '50px'
+      }, 400, 'swing');
+    } else if (e.keyCode === 37){//Left Arrow
+      $char.clearQueue();
       $('.box').animate({
-        left: '+=308px',
-        height: '20px',
-        width: '200'
-      }, 400, 'easeOutQuad');
-      $('.box').animate({
-        left: '-=308px',
-        height: '20px',
-        width: '100px'
-      }, 400, 'easeInQuad');
-    // left arrow
-    } else if (e.keyCode === 37) {
-      $('.box').animate({
-        left: '+=308px',
+        left: '40px',
         height: '300px',
-        width: '500px'
-      }, 400, 'easeOutQuad');
+        width: '50px'
+      }, 400, 'swing');
+    } else if (e.keyCode === 40){//Down Arrow
+      $char.offset()
+      console.log($char.offset());
+      $char.clearQueue();
       $('.box').animate({
-        left: '-=308px',
-        height: '200px',
-        width: '80px'
-      }, 400, 'easeInQuad');
-    } else if (e.keyCode === 40) {
-      $('.box').animate({
-        left: '+=308px',
-        height: '50px',
-        width: '500px'
-      }, 400, 'easeOutQuad');
-      $('.box').animate({
-        left: '-=308px',
-        height: '300px',
-        width: '40px'
-      }, 400, 'easeInQuad');
+        bottom: '300px',
+        height: '100px',
+        width: '50px'
+      }, 400, 'swing');
     }
-  })
+  });
 }
