@@ -1,107 +1,122 @@
 $(init);
+
+let $player;
+let $gameContainer;
+let gameInveral;
+const speed   = 3000;
+const counter = 0;
+
 function init() {
+  const $startGame = $('.first');
+  const $endGame   = $('.last');
+  $player          = $('.player');
+  $gameContainer   = $('main');
 
-  const $char = $('.box');
-  // const $bomb = $('.object');
+  $startGame.one('click', playGame);
+  $endGame.one('click', endGame);
+}// init ends
 
+function playGame() {
+  bindKeys();
+  gameInveral = setInterval(pickObject, speed);
+}//playGame ends
 
-  // Get Relative Position of Const
-  // let locationBomb = $bomb[0].getBoundingClientRect();
-  let locationChar = $char[0].getBoundingClientRect();
+function endGame() {
+  bindKeys();
+  // gameInveral = setInterval(pickObject, speed);
+}//endGame ends
 
-  //Start Game
-  $('.columns').height($(window).height());
-
-  let interval;
-
-  $('.leftFloat.columns').on('click', function() {
-
-    // Create New Box
-    // Call Function
-    // Set Interval
-    interval = setInterval(launchBox, 1000);
-
-    // function yell() {
-    //   console.log("hello");
-    // }
-
-
-  }); // end of column.one('click')
-
-  $('.rightFloat.columns').on('click', function() {
-    clearInterval(interval);
-  });
-
-  let newBox;
-  let newstar;
-  let locationNewBox;
-
-  function launchBox() {
-    newBox = $('<div>', {'class': 'object'});
-    $('body').append(newBox);
-    newBox.animate({left: '-10%'},
-      {duration: (Math.floor(Math.random() * (9000-7000+1)) + 7000),
-
-      //Step Function
-        step: function() {
-          locationNewBox = this.getBoundingClientRect();
-          locationChar = $char[0].getBoundingClientRect();
-          // console.log(this);
-          // Collision if Statemnt
-          if (!(((locationChar.top + locationChar.height) < (locationNewBox.top)) ||
-          (locationChar.top > (locationNewBox.top + locationNewBox.height)) ||
-          ((locationChar.left + locationChar.width) < locationNewBox.left) ||
-          (locationChar.left > (locationNewBox.left + locationNewBox.width)))) {
-
-            // Collision Detected!
-            console.log(this);
-            $(this).css('background-color', 'green');
-            $(this).toggle('explode').stop().remove();
-            console.log('hit!');
-          } else {
-            // No Collision
-            $(this).css('background-color', 'pink');
-          }
-        }
-      });
-    console.log('box Launched!');
-  } // end of launchBox() scope
-
+function bindKeys() {
   $(document).keydown(function(e){
     // Up arrow
     if (!this.pressed) {
       this.pressed = true;
-      $char.stop();
-    } else if (e.keyCode === 38){//Up Arrow
-      $char.clearQueue();
-      $('.box').animate({
-        bottom: '1100px',
-        height: '300px',
-        width: '50px'
+      $player.stop();
+    } else if (e.keyCode === 38){ //Up Arrow
+      $player.clearQueue();
+      $player.addClass('crash-jump');
+      $player.animate({
+        bottom: '+=200'
+      }, 400, 'linear');
+    } else if (e.keyCode === 39){ //Right Arrow
+      $player.clearQueue();
+      $player.animate({
+        left: '+=200'
       }, 400, 'swing');
-    } else if (e.keyCode === 39){//Right Arrow
-      $char.clearQueue();
-      $('.box').animate({
-        left: '2400px',
-        height: '300px',
-        width: '50px'
+    } else if (e.keyCode === 37){ //Left Arrow
+      $player.clearQueue();
+      $player.animate({
+        left: '-=200'
+        // width: '+=3 0'
       }, 400, 'swing');
-    } else if (e.keyCode === 37){//Left Arrow
-      $char.clearQueue();
-      $('.box').animate({
-        left: '40px',
-        height: '300px',
-        width: '50px'
-      }, 400, 'swing');
-    } else if (e.keyCode === 40){//Down Arrow
-      $char.offset()
-      console.log($char.offset());
-      $char.clearQueue();
-      $('.box').animate({
-        bottom: '300px',
-        height: '100px',
-        width: '50px'
-      }, 400, 'swing');
+    } else if (e.keyCode === 40){ //Down Arrow
+      $player.offset();
+      console.log($player.offset());
+      $player.clearQueue();
+      $player.animate({
+        bottom: '-=200'
+      }, 400, 'swing', function() {
+        $player.removeClass('crash-jump');
+      });
+    }
+  });
+}
+
+function pickObject() {
+  const number = Math.random();
+
+  if (number >= 0.8) {
+    const $star = $('<div class="star"><p>+10</p></div>');
+    appendObject($star);
+  } else {
+    const $box = $('<div class="box"><p>Game Over</p></div>');
+    appendObject($box);
+  }
+}//pickObject ends
+
+function appendObject(object) {
+  object.appendTo($gameContainer);
+  animateObject(object);
+}//appendObject ends
+
+function animateObject(object) {
+  object.animate({
+    right: `${$gameContainer.width()}px`
+  }, {
+    duration: 2000,
+    // check object collision with $player variable
+    // if object has class of box and theres a collision <--- gameOver
+    // if object has class of star and theres a collision <--- score++
+    step: function() {
+      const locationobject = this.getBoundingClientRect();
+      // const locationobject = this.getBoundingClientRect();
+      const locationPlayer = $player[0].getBoundingClientRect();
+      // console.log(this);  crazy element info on move
+      // Collision if Statemnt
+      if (!(((locationPlayer.top + locationPlayer.height) < (locationobject.top)) ||
+      (locationPlayer.top > (locationobject.top + locationobject.height)) ||
+      ((locationPlayer.left + locationPlayer.width) < locationobject.left) ||
+      (locationPlayer.left > (locationobject.left + locationobject.width)))) {
+        // Collision Detected
+        console.log(this);
+        if (object.hasClass('box')) {
+          console.log('.box p');
+          $('.box p').css('display', 'block');
+          // end game
+        } else {
+          console.log($('.star p'));
+          $('.star p').css('display', 'block');
+        }
+        $('.box').addClass('BOX');
+        $(this).css('background-color', 'pink');
+        $(this).css('background-color', 'green');
+        $(this).toggle('explode').stop().remove();
+
+        // console.log('hit');
+      }
+    },// end step function
+    complete: function() {
+      object.stop().remove();
     }
   });
 }
