@@ -23,7 +23,7 @@ function playGame() {
 
 function endGame() {
   bindKeys();
-  // gameInveral = setInterval(pickObject, speed);
+  gameInveral = setInterval(pickObject, speed);
 }//endGame ends
 
 function bindKeys() {
@@ -34,7 +34,7 @@ function bindKeys() {
       $player.stop();
     } else if (e.keyCode === 38){ //Up Arrow
       $player.clearQueue();
-      $player.addClass('crash-jump');
+      $player.addClass('frog-jump');
       $player.animate({
         bottom: '+=200'
       }, 400, 'linear');
@@ -56,7 +56,7 @@ function bindKeys() {
       $player.animate({
         bottom: '-=200'
       }, 400, 'swing', function() {
-        $player.removeClass('crash-jump');
+        $player.removeClass('frog-jump');
       });
     }
   });
@@ -112,7 +112,7 @@ function animateObject(object) {
         $(this).css('background-color', 'green');
         $(this).toggle('explode').stop().remove();
 
-        // console.log('hit');
+        console.log('hit');
       }
     },// end step function
     complete: function() {

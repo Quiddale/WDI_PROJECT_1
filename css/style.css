@@ -9,41 +9,29 @@ main {
   background: blue;
 }
 .player {
-  width: 450px;
-  height: 450px;
-  background: url(../gif/crash.png);
+  width: 300px;
+  height: 300px;
+  background: url(../gif/frog.gif);
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
   left: 25px;
-  bottom: -1600px;
+  margin-top: 563px;
+  /*top: 280px;*/
   z-index: 1;
-  transform: scaleX(-1);
 }
-.crash-jump {
-  background: url(../gif/crash-jump.png);
+.frog-jump {
+  background: url(../gif/frog-jump.png);
   background-size: contain;
   background-repeat: no-repeat;
-}
-.bird {
-  width: 300px;
-  height: 300px;
-  background: url(../gif/bird.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 2000px;
-  bottom: -1700px;
-  z-index: 1;
-  transform: scaleX(-1);
 }
 .box {
   width: 90px;
   height: 90px;
   position: absolute;
   right: 0;
-  bottom: -1600px;
-  z-index: 2;
+  margin-top: -220px;
+  z-index: 1;
   background: url(../gif/crate.gif);
   background-size: contain;
   background-repeat: no-repeat;
@@ -53,8 +41,8 @@ main {
   height: 60px;
   position: absolute;
   right: 0;
-  bottom: -1600px;
-  z-index: 2;
+  margin-top: -207px;
+  z-index: 1;
   background: url(https://qph.ec.quoracdn.net/main-qimg-0db8817be9958205021b6d8f021b0631);
   background-size: contain;
   background-repeat: no-repeat;
@@ -66,16 +54,13 @@ main {
 .box p {
   margin: -40px;
   size: 5px;
-
 }
 .rightFloat {
-  /*background-color:transparent;*/
   float: right;
   width: 33.3%;
   height: 100%;
 }
 .leftFloat {
-  /*background-color:yellow;*/
   float: left;
   width: 33.4%;
   height: 100%;
@@ -83,45 +68,39 @@ main {
   font-size: 10px;
 }
 .noFloat {
-  /*background-color: cyan;*/
   display: inline-block;
   width: 33.3%;
   height: 100%;
 }
 .background {
   width: 100%;
-  height: 100%;
-  background:url(../gif/cloud.gif);
+  height: 100vh;
+  background:url(../gif/cloud_2.gif);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-.backgroundtwo {
-  background-color: #9dacea;
-  display: inline-block;
-  width: 100%;
-  height: 400%;
-}
+/*.backgroundtwo {
+background-color: #9dacea;
+display: inline-block;
+width: 100%;
+height: 400%;
+}*/
 .ground {
   width: inherit;
-  height: 50px;
-  /*background:url(;*/
-  background-size: contain;
-  background: green;
-  /*clear: both;*/
+  margin-top: -293px;
+  height: 100%;
+  background:url(../gif/trees.png);
 }
-/*.platform {
-
-}*/
 .column {
-  float: left;
-  bottom: 25px;
+  position: absolute;
+  bottom: 88%;
   z-index: 1;
-  width: 33.33%;
-  height: 375px;
+  width: 100%;
+  height: 50px;
   background: black;
   opacity: 0.6;
 }
 .first { background: green; }
-.middle { background: blue; }
-.last { background: red; }
+.middle { background: transparent; }
+.last { background: transparent; }
