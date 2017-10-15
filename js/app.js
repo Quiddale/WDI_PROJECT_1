@@ -2,9 +2,10 @@ $(init);
 
 let $player;
 let $gameContainer;
-let gameInveral;
+// let gameInveral;
 const speed   = 3000;
-const counter = 0;
+
+// const counter = 0;
 
 function init() {
   const $startGame = $('.first');
