@@ -1,5 +1,5 @@
 # Infinite Runner
-Check out the live version of the app here ->Utilising HTML5, CSS3 and jQuery I designed and built a stylised, collision-based JavaScript game named "Infinite Runner". The purpose of the game is to avoid oncoming traffic whilst attempting to collect bonus points, it is designed to test a player’s reactions.
+Check out the live version of the app here -> file:///Users/quiddaleosullivan/Development/WDI_PROJECT_1/index.htmlUtilising HTML5, CSS3 and jQuery I designed and built a stylised, collision-based JavaScript game named "Infinite Runner". The purpose of the game is to avoid oncoming traffic whilst attempting to collect bonus points, it is designed to test a player’s reactions.
 
 ---
 **Binding Arrow keys in JS**```function bindKeys() {
